@@ -25,11 +25,12 @@ namespace HeartAttack.Patches
                 {
 
                     float heartAttackValue = UnityEngine.Random.Range(0f, 100f);
-                    float chance = 100f; // Will change to a lower one this is for testing.
+                    float chance = 20f;
                     Plugin.Logger.LogDebug($"Heart Attack Value: {heartAttackValue}");
                     if (heartAttackValue <= chance)
                     {
                         __instance.KillPlayer(Vector3.zero, true, CauseOfDeath.Unknown, 0, Vector3.zero);
+                        Plugin.Logger.LogDebug("HEART ATTACK");
                     }
 
                     hasHeartAttackOccurred = true;
