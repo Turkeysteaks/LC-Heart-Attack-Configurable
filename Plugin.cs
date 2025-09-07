@@ -17,7 +17,8 @@ namespace HeartAttack
 
         private static Plugin Instance;
 
-        internal new static ManualLogSource Logger;
+        internal static new ManualLogSource Logger;
+        internal static HeartAttackConfig BoundConfig { get; private set; } = null;
 
         void Awake()
         {
@@ -25,6 +26,7 @@ namespace HeartAttack
             {
                 Instance = this;
             }
+            BoundConfig = new HeartAttackConfig(base.Config);
 
             Logger = base.Logger;
 

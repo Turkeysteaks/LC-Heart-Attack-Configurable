@@ -1,13 +1,14 @@
-﻿using GameNetcodeStuff;
-using HarmonyLib;
-using UnityEngine;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameNetcodeStuff;
+using HarmonyLib;
+using HeartAttack;
 using JetBrains.Annotations;
-using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace HeartAttack.Patches
@@ -17,15 +18,25 @@ namespace HeartAttack.Patches
     {
         private static bool hasHeartAttackOccurred = false;
         private static bool hasFearAttackOccurred = false;
+        static float heartAttackChance = 10f;
+        static float trembleChance = 13f;
+        static float playerTrembleMoveSpeed = 0.35f;
+        static float playerTrembleClimbSpeed = 2f;
+
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
-
         static void heartAttack(PlayerControllerB __instance)
         {
-            
-            if ((__instance == GameNetworkManager.Instance.localPlayerController))
+            if (__instance == GameNetworkManager.Instance.localPlayerController)
             {
-                int playerCount = StartOfRound.Instance.allPlayerScripts.Where(x => x.isPlayerControlled).Count();
+                heartAttackChance = Plugin.BoundConfig.heartAttackChance.Value;
+                trembleChance = Plugin.BoundConfig.trembleChance.Value;
+                playerTrembleMoveSpeed = Plugin.BoundConfig.playerTrembleMoveSpeed.Value;
+                playerTrembleClimbSpeed = Plugin.BoundConfig.playerTrembleClimbSpeed.Value;
+                Plugin.Logger.LogDebug($"Rogan here: heart attack chance: {heartAttackChance}");
+                int playerCount = StartOfRound
+                    .Instance.allPlayerScripts.Where(x => x.isPlayerControlled)
+                    .Count();
                 //Plugin.Logger.LogDebug($"FearLevel: {StartOfRound.Instance.fearLevel}");
                 if (playerCount > 1)
                 {
@@ -34,7 +45,6 @@ namespace HeartAttack.Patches
                         if (!hasHeartAttackOccurred && !__instance.isPlayerAlone)
                         {
                             triggerHeartAttack(__instance);
-
                         }
                         else if (!hasFearAttackOccurred)
                         {
@@ -55,7 +65,6 @@ namespace HeartAttack.Patches
                         if (!hasHeartAttackOccurred)
                         {
                             triggerHeartAttack(__instance);
-
                         }
                         else if (!hasFearAttackOccurred)
                         {
@@ -78,7 +87,7 @@ namespace HeartAttack.Patches
         private static void triggerHeartAttack(PlayerControllerB player)
         {
             float heartAttackValue = UnityEngine.Random.Range(0f, 100f);
-            float chance = 10f;
+            float chance = heartAttackChance;
             Plugin.Logger.LogDebug($"Heart Attack Value: {heartAttackValue}");
 
             if (heartAttackValue <= chance)
@@ -87,13 +96,12 @@ namespace HeartAttack.Patches
                 Plugin.Logger.LogDebug("HEART ATTACK");
             }
             hasHeartAttackOccurred = true;
-
         }
 
         private static void tremblingFear(PlayerControllerB player)
         {
             float fearValue = UnityEngine.Random.Range(0f, 100f);
-            float chance = 13f; 
+            float chance = trembleChance;
             Plugin.Logger.LogDebug($"Fear Value: {fearValue}");
             if (fearValue <= chance)
             {
@@ -110,8 +118,8 @@ namespace HeartAttack.Patches
             float originalClimbSpeed = player.climbSpeed;
             float originalLookSensitivity = player.lookSensitivity;
 
-            player.movementSpeed = 0.35f;
-            player.climbSpeed = 2f;
+            player.movementSpeed = playerTrembleMoveSpeed;
+            player.climbSpeed = playerTrembleClimbSpeed;
             //player.lookSensitivity = 0.05f; This does not work.
             HUDManager.Instance.ShakeCamera(ScreenShakeType.Big);
 
