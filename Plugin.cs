@@ -9,9 +9,9 @@ namespace HeartAttack
     [BepInPlugin(modGUID, modName, modVersion)]
     public class Plugin : BaseUnityPlugin
     {
-        private const string modGUID = "Nono.HeartAttackMod";
-        private const string modName = "Heart Attack";
-        private const string modVersion = "1.0.0.0";
+        private const string modGUID = "Turkeysteaks.HeartAttackMod";
+        private const string modName = "Real Heart Attack";
+        private const string modVersion = "1.0.0";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 

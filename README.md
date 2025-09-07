@@ -9,4 +9,24 @@ Technologies:
 - BepInEx (THIS IS REQUIRED FOR THE MOD TO WORK PROPERLY)
   
 _________________________ 
-For more simpler terms, this mod makes it so that you have 10% chance to die when encountering fear and you must be with someone (if you're playing alone than it just would just work by only having the 10% chance to die) also a 13% chance to tremble in fear meaning you move slower for 2.5 seconds as if you were frozen in fear. So, make sure your employee does not get scared a lot otherwise you may just have a heart attack. 
+
+### ALL CREDITS TO ORIGINAL MOD: https://thunderstore.io/c/lethal-company/p/nono_t27/HeartAttack/ 
+
+This mod adds in a slim chance (default 5%) for the player to instantly die upon getting scared, and a slightly bigger chance (default 13%) for the player to suffer effects instead.
+
+The heart attack and tremble can be individually modified by config.
+
+Trembling causes lower movement speed for a short period of time.
+
+## Roadmap:
+- [x] Change heart attack chance via config
+- [x] Chance tremble chance via config
+- [x] Change tremble move speed via config
+- [ ] Change heart attack from instant kill to just damage
+- [ ] Introduce extra effects for both heart attack and tremble
+- [ ] Use a specific cause of death that works with Coroner
+
+## Changelog:
+
+### v1.0.0
+Created mod (from https://thunderstore.io/c/lethal-company/p/nono_t27/HeartAttack/)
