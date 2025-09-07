@@ -1,16 +1,5 @@
-# Lethal Company Heart Attack
- Adds in a heart attack difficulty tweak aka RNG. 
-
-_________________________ 
-
-Technologies:
-- C#
-- Unity
-- BepInEx (THIS IS REQUIRED FOR THE MOD TO WORK PROPERLY)
-  
-_________________________ 
-
-### ALL CREDITS TO ORIGINAL MOD: https://thunderstore.io/c/lethal-company/p/nono_t27/HeartAttack/ 
+# Heart Attack
+## But configurable
 
 This mod adds in a slim chance (default 5%) for the player to instantly die upon getting scared, and a slightly bigger chance (default 13%) for the player to suffer effects instead.
 
@@ -26,7 +15,22 @@ Trembling causes lower movement speed for a short period of time.
 - [ ] Introduce extra effects for both heart attack and tremble
 - [ ] Use a specific cause of death that works with Coroner
 
-## Changelog:
+The original mod was created by nono_t27.
+I forked his project and updated the code to work with configuration files for the existing values,
+and I plan to add more content in future.
 
-### v1.0.0
-Created mod (from https://thunderstore.io/c/lethal-company/p/nono_t27/HeartAttack/)
+## ORIGINAL MOD DESCRIPTION:
+
+# Lethal Company Heart Attack
+Adds in a heart attack difficulty tweak aka RNG.
+
+_________________________ 
+
+Technologies:
+- C#
+- Unity
+- BepInEx (THIS IS REQUIRED FOR THE MOD TO WORK PROPERLY)
+
+_________________________ 
+
+### ALL CREDITS TO ORIGINAL MOD: https://thunderstore.io/c/lethal-company/p/nono_t27/HeartAttack/

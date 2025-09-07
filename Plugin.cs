@@ -11,7 +11,7 @@ namespace HeartAttack
     {
         private const string modGUID = "Turkeysteaks.HeartAttackMod";
         private const string modName = "Real Heart Attack";
-        private const string modVersion = "1.0.0";
+        private const string modVersion = "1.0.2";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
