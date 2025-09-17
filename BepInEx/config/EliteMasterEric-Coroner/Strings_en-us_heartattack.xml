@@ -1,0 +1,17 @@
+<base>
+    <tags>
+        <tag language="en-us" />
+    </tags>
+
+    <strings>
+        <!-- NOTE: If SeriousDeathNotes is turned on, it displays only the first entry, so make the first entry literal! -->
+        <DeathHeartAttack text="Had a heart attack." />
+        <DeathHeartAttack text="Got too scared." />
+        <DeathHeartAttack text="Should have exercised their heart more." />
+        <DeathHeartAttack text="Hid under the covers." />
+        <DeathHeartAttack text="Forgot their heart medication." />
+        <DeathHeartAttack text="OH DEAR LORD!" />
+        <DeathHeartAttack text="Their teen heart was beating faster, faster." />
+        <DeathHeartAttack text="Heart stopped beating." />
+    </strings>
+</base>

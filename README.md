@@ -13,7 +13,9 @@ Trembling causes lower movement speed for a short period of time.
 - [x] Change tremble move speed via config
 - [ ] Change heart attack from instant kill to just damage
 - [ ] Introduce extra effects for both heart attack and tremble
-- [ ] Use a specific cause of death that works with Coroner
+- [x] Use a specific cause of death that works with Coroner
+- [x] Add in a chance for an adrenaline rush
+- [ ] Add in alternate affects
 
 The original mod was created by nono_t27.
 I forked his project and updated the code to work with configuration files for the existing values,

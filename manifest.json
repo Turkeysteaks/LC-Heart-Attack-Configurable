@@ -1,6 +1,6 @@
 {
   "name": "RealHeartAttack",
-  "version_number": "1.0.2",
+  "version_number": "1.1.0",
   "website_url": "https://github.com/Turkeysteaks/LC-Heart-Attack-Configurable",
   "description": "Updated version of the Heart Attack mod by nono_t27. Configurable RNG chance to either die or 'tremble' when your character gets scared.",
   "dependencies": ["BepInEx-BepInExPack-5.4.2100"]
