@@ -11,6 +11,12 @@ namespace HeartAttack.Patches
         public readonly ConfigEntry<float> heartAttackChance;
         public readonly ConfigEntry<float> trembleChance;
         public readonly ConfigEntry<float> adrenalineChance;
+        public readonly ConfigEntry<float> minFearToTrigger;
+        public readonly ConfigEntry<float> maxFearToReset;
+        
+        public readonly ConfigEntry<bool> heartAttackWhenAlone;
+        
+
         public readonly ConfigEntry<bool> trembleAfterAdrenaline;
 
         public readonly ConfigEntry<bool> trembleInstant;
@@ -48,9 +54,30 @@ namespace HeartAttack.Patches
                 15f,
                 new ConfigDescription("Percentage chance to gain an adrenaline rush on fear. Set to 0 for no chance.", new AcceptableValueRange<float>(0f, 100f))
             );
+            
+            minFearToTrigger = cfg.Bind(
+                "General",
+                "FearToTrigger",
+                0.5f,
+                "Minimum fear required to trigger any of the effects. Value should be between 0 and 1, and must be higher than FearToReset."
+            );
+            
+            maxFearToReset = cfg.Bind(
+                "General",
+                "FearToReset",
+                0.25f,
+                "Maximum fear required to reset the chance to have an effect. Once fear is below this number, getting scared again can trigger another effect. Value should be between 0 and 1, and must be lower than FearToTrigger."
+            );
+
+            heartAttackWhenAlone = cfg.Bind(
+                "General",
+                "HeartAttackWhenAlone",
+                false,
+                "Whether it's possible to have a heart attack when on your own. Note that in singleplayer, this value is ignored and you can always have a heart attack."
+            );
 
             trembleAfterAdrenaline = cfg.Bind(
-                "General",
+                "Adrenaline",
                 "TrembleAfterAdrenaline",
                 false,
                 "Whether to always force a tremble (slowdown) after an adrenaline rush."

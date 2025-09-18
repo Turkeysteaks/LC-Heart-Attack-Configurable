@@ -20,8 +20,13 @@ namespace HeartAttack.Patches
         private static bool hasFearAttackOccurred = false;
         private static bool hasAdrenalineOccurred = false;
 
+        private static bool heartAttackWhenAlone = false;
+
         private static bool trembling = false;
         private static bool adrenaline = false;
+
+        private static float minFearToTrigger = 0.5f;
+        private static float maxFearToReset = 0.25f;
         
         private static float heartAttackChance = 10f;
         
@@ -57,7 +62,10 @@ namespace HeartAttack.Patches
                 heartAttackChance = Plugin.BoundConfig.heartAttackChance.Value;
                 trembleChance = Plugin.BoundConfig.trembleChance.Value;
                 adrenalineChance = Plugin.BoundConfig.adrenalineChance.Value;
-                trembleAfterAdrenaline = Plugin.BoundConfig.trembleAfterAdrenaline.Value;
+                minFearToTrigger = Plugin.BoundConfig.minFearToTrigger.Value;
+                maxFearToReset = Plugin.BoundConfig.maxFearToReset.Value;
+
+                heartAttackWhenAlone = Plugin.BoundConfig.heartAttackWhenAlone.Value;
                 
                 trembleInstant = Plugin.BoundConfig.trembleInstant.Value;
                 trembleMoveSpeed = Plugin.BoundConfig.playerTrembleMoveSpeed.Value;
@@ -70,6 +78,7 @@ namespace HeartAttack.Patches
                 adrenalineTime = Plugin.BoundConfig.adrenalineTime.Value;
                 adrenalineFOV = Plugin.BoundConfig.adrenalineFOV.Value;
                 adrenalineDrunkness = Plugin.BoundConfig.adrenalineDrunkness.Value;
+                trembleAfterAdrenaline = Plugin.BoundConfig.trembleAfterAdrenaline.Value;
                 
                 hasSetVals = true;
             }
@@ -77,54 +86,28 @@ namespace HeartAttack.Patches
                 .Instance.allPlayerScripts
                 .Count(x => x.isPlayerControlled);
 
-            if (playerCount > 1)
-            {                
-                if (StartOfRound.Instance.fearLevel >= 0.5f)
-                {
-                    if (!hasHeartAttackOccurred && !__instance.isPlayerAlone)
-                    {
-                        TriggerHeartAttack(__instance);
-                    }
-                    else if (!hasFearAttackOccurred)
-                    {
-                        TriggerTremblingFear(__instance);
-                    } else if (!hasAdrenalineOccurred)
-                    {
-                        TriggerAdrenaline(__instance);
-                    }
-
-                }
-                else if (StartOfRound.Instance.fearLevel < 0.125f)
-                {
-                    hasHeartAttackOccurred = false;
-                    hasFearAttackOccurred = false;
-                    hasAdrenalineOccurred = false;
-                }
-            }
-            else
+            if (StartOfRound.Instance.fearLevel >= minFearToTrigger)
             {
-                // if there is some better way to do this please let me know (I mean this for the entire code).
-                if (StartOfRound.Instance.fearLevel >= 0.5f)
+                if (!hasHeartAttackOccurred && (playerCount <= 1 || !__instance.isPlayerAlone || heartAttackWhenAlone))
                 {
-                    if (!hasHeartAttackOccurred)
-                    {
-                        TriggerHeartAttack(__instance);
-                    }
-                    else if (!hasFearAttackOccurred)
-                    {
-                        TriggerTremblingFear(__instance);
-                    } else if (!hasAdrenalineOccurred)
-                    {
-                        TriggerAdrenaline(__instance);
-                    }
+                    TriggerHeartAttack(__instance);
                 }
-                else if (StartOfRound.Instance.fearLevel < 0.25f)
+                else if (!hasFearAttackOccurred)
                 {
-                    hasHeartAttackOccurred = false;
-                    hasFearAttackOccurred = false;
-                    hasAdrenalineOccurred = false;
+                    TriggerTremblingFear(__instance);
+                }
+                else if (!hasAdrenalineOccurred)
+                {
+                    TriggerAdrenaline(__instance);
                 }
             }
+            else if (StartOfRound.Instance.fearLevel < maxFearToReset)
+            {
+                hasHeartAttackOccurred = false;
+                hasFearAttackOccurred = false;
+                hasAdrenalineOccurred = false;
+            }
+            
         }
 
         private static void TriggerHeartAttack(PlayerControllerB player)
@@ -154,9 +137,8 @@ namespace HeartAttack.Patches
                 Plugin.Logger.LogDebug($"Tremble Trigger Value: {triggerValue}");
                 if ((!trembling && !adrenaline && triggerValue <= chance) || force)
                 {
-                    player.StartCoroutine(ApplyTheFear(player));
-
                     Plugin.Logger.LogDebug("FEAR!");
+                    player.StartCoroutine(ApplyTheFear(player));
                 }
 
                 hasFearAttackOccurred = true;
@@ -173,6 +155,8 @@ namespace HeartAttack.Patches
                 Plugin.Logger.LogDebug("ADRENALINE!");
                 player.StartCoroutine(ApplyTheAdrenaline(player));
             }
+
+            hasAdrenalineOccurred = true;
         }
 
         private static IEnumerator ApplyTheFear(PlayerControllerB player)
@@ -183,7 +167,7 @@ namespace HeartAttack.Patches
             float originalLookSensitivity = player.lookSensitivity;
                
             HUDManager.Instance.ShakeCamera(ScreenShakeType.Big);
-            if(adrenalineInstant)
+            if(trembleInstant)
             {
                 player.movementSpeed = trembleMoveSpeed;
                 player.climbSpeed = trembleClimbSpeed;

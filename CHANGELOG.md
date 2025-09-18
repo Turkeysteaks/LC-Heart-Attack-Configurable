@@ -1,3 +1,14 @@
+## v1.1.3
+- Add config setting for fear levels to trigger and reset effects.
+- Add config setting to toggle whether heart attacks can occur on your own (singleplayer unaffected, they can always happen)
+
+## v1.1.2
+- Fix bug causing adrenaline to activate repeatedly
+- Fix bug with `trembleInstant` config setting
+
+## v1.1.1
+- Oops
+
 ## v1.1.0
 - Added compatibility (soft dependency) with Coroner and custom death messages
 - Added Adrenaline rush as a third effect to occur

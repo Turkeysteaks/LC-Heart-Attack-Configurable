@@ -1,11 +1,16 @@
 # Heart Attack
 ## But configurable
 
+Please let me know of any issues or feature requests on the [LC modding discord](https://discord.com/channels/1168655651455639582/1417943969215680562). 
+
 This mod adds in a slim chance (default 5%) for the player to instantly die upon getting scared, and a slightly bigger chance (default 13%) for the player to suffer effects instead.
 
 The heart attack and tremble can be individually modified by config.
 
 Trembling causes lower movement speed for a short period of time.
+
+
+
 
 ## Roadmap:
 - [x] Change heart attack chance via config
